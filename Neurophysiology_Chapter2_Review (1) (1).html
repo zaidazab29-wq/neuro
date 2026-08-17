@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 — Neurophysiology | مراجعة شاملة</title>
+<style>
+:root{
+  --bg:#0f1117;
+  --panel:#171a24;
+  --panel2:#1d2130;
+  --border:#2a2f42;
+  --text:#e7e9f0;
+  --muted:#9aa0b4;
+  --accent:#5eead4;
+  --accent2:#818cf8;
+  --warn:#fbbf24;
+  --danger:#fb7185;
+  --good:#4ade80;
+  --nav-w:260px;
+  --spring: cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:radial-gradient(circle at 20% -10%, #1a1f2e 0%, var(--bg) 45%);
+  color:var(--text);
+  font:400 15px/1.85 -apple-system, "SF Pro Text", "Segoe UI", "Cairo", Tahoma, sans-serif;
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{display:flex; min-height:100vh}
+
+/* ---- Topbar (mobile only) ---- */
+.topbar{
+  display:none; position:sticky; top:0; z-index:40; align-items:center; gap:12px;
+  padding:12px 16px; background:rgba(15,17,23,.72); backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.topbar b{font-size:14.5px; color:var(--text)}
+#navToggle{
+  appearance:none; background:var(--panel2); border:1px solid var(--border); color:var(--text);
+  width:38px; height:38px; border-radius:10px; font-size:16px; cursor:pointer;
+  transition:transform 160ms var(--spring), background 160ms;
+}
+#navToggle:active{transform:scale(.92)}
+
+/* ---- Side nav ---- */
+nav{
+  width:var(--nav-w); min-width:var(--nav-w); background:rgba(23,26,36,.9);
+  backdrop-filter:blur(16px);
+  border-left:1px solid var(--border);
+  padding:20px 14px; position:sticky; top:0; height:100vh; overflow-y:auto;
+  scrollbar-width:thin;
+}
+nav h1{font-size:14.5px; letter-spacing:.01em; color:var(--accent); margin:4px 0 16px; text-align:center; font-weight:600}
+nav a{
+  display:block; color:var(--muted); text-decoration:none; font-size:13.5px;
+  padding:9px 12px; border-radius:9px; margin-bottom:2px;
+  transition:background 160ms var(--spring), color 160ms, border-color 160ms, transform 160ms var(--spring);
+  border-right:3px solid transparent;
+}
+nav a:hover{background:var(--panel2); color:var(--text)}
+nav a:active{transform:scale(.98)}
+nav a.active{background:var(--panel2); color:var(--accent); border-color:var(--accent)}
+
+main{flex:1; padding:28px 36px; max-width:980px; min-width:0}
+.hero{
+  background:linear-gradient(135deg, #1e2233, #171a24);
+  border:1px solid var(--border); border-radius:18px; padding:24px 28px; margin-bottom:26px;
+}
+.hero h1{margin:0 0 8px; font-size:clamp(20px,3vw,26px); line-height:1.15; letter-spacing:-.01em; color:var(--text); font-weight:700}
+.hero p{margin:0; color:var(--muted); font-size:14.5px; line-height:1.7}
+.pill{display:inline-block; background:#20263a; color:var(--accent); padding:3px 10px; border-radius:999px; font-size:11.5px; margin-inline-start:6px}
+section.card{
+  background:var(--panel); border:1px solid var(--border); border-radius:16px;
+  padding:22px 26px; margin-bottom:20px; scroll-margin-top:88px;
+}
+section.card h2{
+  color:var(--accent2); font-size:19px; font-weight:700; margin-top:0; padding-bottom:10px;
+  border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px;
+}
+section.card h3{color:var(--accent); font-size:15.5px; font-weight:600; margin-top:22px}
+.en{font-family:"SF Mono",Consolas,monospace; direction:ltr; unicode-bidi:isolate; display:inline-block; color:#fcd34d; letter-spacing:0}
+
+/* Tables now respect the page's RTL flow — English terms still render
+   correctly left-to-right on their own via unicode bidi isolation,
+   but row order and cell alignment match how an Arabic reader scans. */
+table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px; text-align:right}
+th,td{border:1px solid var(--border); padding:8px 11px; unicode-bidi:isolate}
+th{background:#20263a; color:var(--accent); font-weight:600}
+tr:nth-child(even){background:#191d29}
+tr{transition:background 160ms}
+ul{padding-right:20px}
+li{margin-bottom:6px}
+.box{
+  background:#151925; border-right:3px solid var(--accent2); border-radius:10px;
+  padding:13px 17px; margin:13px 0; font-size:13.8px;
+}
+.box.warn{border-color:var(--warn)}
+.box.clin{border-color:var(--danger)}
+.box.mnem{border-color:var(--good)}
+.box b{color:var(--accent2)}
+.box.clin b{color:var(--danger)}
+.box.mnem b{color:var(--good)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+
+.qa{background:#151925; border-radius:10px; padding:11px 15px; margin-bottom:9px; border:1px solid var(--border); overflow:hidden}
+.qa summary{cursor:pointer; color:var(--accent); font-size:13.8px; list-style:none}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::before{content:"▸"; display:inline-block; margin-inline-end:8px; color:var(--accent2); transition:transform 220ms var(--spring)}
+.qa[open] summary::before{transform:rotate(90deg)}
+.qa div{margin-top:9px; color:var(--muted); font-size:13.5px; line-height:1.8}
+.top10{counter-reset:t}
+.top10 li{counter-increment:t; position:relative; padding-right:28px}
+.top10 li::before{content:counter(t); position:absolute; right:0; top:0; background:var(--accent2); color:#0f1117; width:19px; height:19px; border-radius:50%; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center}
+footer{text-align:center; color:var(--muted); font-size:12px; padding:34px 0}
+
+/* ---- Responsive: collapsible drawer nav on mobile ---- */
+@media(max-width:760px){
+  .grid2{grid-template-columns:1fr}
+  .topbar{display:flex}
+  main{padding:20px 18px}
+  nav{
+    position:fixed; right:0; top:0; height:100vh; z-index:50;
+    transform:translateX(100%); transition:transform 320ms var(--spring);
+    box-shadow:-12px 0 40px rgba(0,0,0,.4);
+  }
+  nav.open{transform:translateX(0)}
+  .scrim{
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:45;
+    opacity:0; transition:opacity 280ms;
+  }
+  .scrim.show{display:block; opacity:1}
+}
+
+/* ---- Respect reduced motion ---- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{transition-duration:1ms !important; animation-duration:1ms !important}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button id="navToggle" aria-label="القائمة">☰</button>
+  <b>Chapter 2 — Neurophysiology</b>
+</div>
+<div class="scrim" id="scrim"></div>
+<div class="wrap">
+<nav id="sideNav">
+  <h1>Chapter 2 — Neurophysiology</h1>
+  <a href="#ans">1. الجهاز العصبي الذاتي ANS</a>
+  <a href="#nsorg">2. تنظيم الجهاز العصبي</a>
+  <a href="#sensory-gen">3. المستقبلات الحسية العامة</a>
+  <a href="#somato">4. Somatosensory</a>
+  <a href="#vision">5. الإبصار Vision</a>
+  <a href="#audition">6. السمع Audition</a>
+  <a href="#vestibular">7. الجهاز الدهليزي</a>
+  <a href="#smell-taste">8. الشم والتذوق</a>
+  <a href="#motor">9. الجهاز الحركي — Motor Unit</a>
+  <a href="#reflexes">10. المنعكسات العضلية</a>
+  <a href="#spinal-brainstem">11. Spinal & Brainstem Control</a>
+  <a href="#cerebellum">12. المخيخ Cerebellum</a>
+  <a href="#basal">13. العقد القاعدية Basal Ganglia</a>
+  <a href="#cortex">14. القشرة الحركية</a>
+  <a href="#higher">15. الوظائف العليا</a>
+  <a href="#bbb">16. BBB & CSF</a>
+  <a href="#temp">17. تنظيم الحرارة</a>
+  <a href="#highyield">⭐ High-Yield + Active Recall</a>
+</nav>
+
+<main>
+<div class="hero">
+  <h1>Neurophysiology — الفصل الثاني كامل</h1>
+  <p>مراجعة شاملة لكل الفصل من BRS Physiology — للي مفتحش الشابتر خالص. كل نقطة بالعربي ومصطلحاتها بالإنجليزي زي ما هتتكتب في الامتحان.
+  <span class="pill">7th Edition</span><span class="pill">USMLE Step 1</span></p>
+</div>
+
+<section class="card" id="ans">
+<h2>1️⃣ Autonomic Nervous System (ANS)</h2>
+<p>الـ <span class="en">ANS</span> هو الجزء اللي بيتحكم في العضلات اللي احنا مش بنتحكم فيها بإرادتنا: <span class="en">smooth muscle, cardiac muscle, glands</span>. بيختلف عن <span class="en">somatic nervous system</span> اللي بيتحكم في العضلات الإرادية (Skeletal muscle). عنده 3 أقسام: <b class="en">Sympathetic, Parasympathetic, Enteric</b>.</p>
+
+<h3>🔹 التنظيم التشريحي</h3>
+<div class="box">كل مسار فيه عصبونين: <b>Preganglionic neuron</b> (من الـ CNS) بيعمل synapse في <b>ganglion</b> مع <b>Postganglionic neuron</b> اللي بيوصل للعضو المستهدف.
+<br>- <b>Sympathetic ganglia</b>: قريبة من الـ spinal cord (paravertebral chain) → عشان كده الـ preganglionic axon قصير والـ postganglionic طويل.
+<br>- <b>Parasympathetic ganglia</b>: جوه أو جنب العضو نفسه → الـ preganglionic axon طويل والـ postganglionic قصير.</div>
+
+<table>
+<tr><th>Characteristic</th><th>Sympathetic</th><th>Parasympathetic</th><th>Somatic</th></tr>
+<tr><td>Origin</td><td>T1–L3 (Thoracolumbar)</td><td>CN III,VII,IX,X + S2–S4 (Craniosacral)</td><td>—</td></tr>
+<tr><td>Preganglionic axon</td><td>Short</td><td>Long</td><td>—</td></tr>
+<tr><td>Ganglion neurotransmitter</td><td>ACh (nicotinic)</td><td>ACh (nicotinic)</td><td>—</td></tr>
+<tr><td>Postganglionic axon</td><td>Long</td><td>Short</td><td>—</td></tr>
+<tr><td>Neurotransmitter on organ</td><td>Norepinephrine* (α1,α2,β1,β2)</td><td>ACh (Muscarinic)</td><td>ACh (Nicotinic)</td></tr>
+</table>
+<p style="font-size:12px;color:var(--muted)">*Sweat glands استثناء: بتستقبل تعصيب سمبثاوي لكن الناقل عندها ACh مش Norepinephrine.</p>
+
+<div class="box clin"><b>Clinical:</b> الـ <span class="en">Adrenal medulla</span> هو "gangliion" متخصص للجهاز السمبثاوي. الـ preganglionic fibers بتعمل synapse مباشرة على <span class="en">chromaffin cells</span> اللي بتفرز <b>Epinephrine (80%)</b> و <b>Norepinephrine (20%)</b> في الدم. ورم فيها = <b>Pheochromocytoma</b> → زيادة إفراز الكاتيكولامينات وزيادة <span class="en">VMA</span> في البول.</div>
+
+<h3>🔹 مستقبلات الجهاز الذاتي (Table 2.2 & 2.3)</h3>
+<table>
+<tr><th>Receptor</th><th>Location</th><th>G-protein / Mechanism</th><th>Agonist</th><th>Antagonist</th></tr>
+<tr><td>α1</td><td>Vascular smooth muscle (skin/splanchnic), sphincters, iris radial muscle</td><td>Gq → ↑IP3/Ca²⁺ (excitation)</td><td>Phenylephrine</td><td>Prazosin, Phenoxybenzamine</td></tr>
+<tr><td>α2</td><td>Presynaptic terminals, platelets, fat cells</td><td>Gi → ↓cAMP (inhibition)</td><td>Clonidine</td><td>Yohimbine</td></tr>
+<tr><td>β1</td><td>Heart (SA/AV node, ventricle)</td><td>Gs → ↑cAMP (excitation)</td><td>Dobutamine, Isoproterenol</td><td>Metoprolol, Propranolol</td></tr>
+<tr><td>β2</td><td>Skeletal muscle vessels, bronchioles</td><td>Gs → ↑cAMP (relaxation)</td><td>Albuterol, Isoproterenol</td><td>Butoxamine, Propranolol</td></tr>
+<tr><td>Nicotinic Nₙ</td><td>Autonomic ganglia</td><td>Na⁺/K⁺ channel opening</td><td>ACh, Nicotine</td><td>Hexamethonium</td></tr>
+<tr><td>Nicotinic Nₘ</td><td>Neuromuscular junction</td><td>Na⁺/K⁺ channel opening</td><td>ACh</td><td>Curare</td></tr>
+<tr><td>Muscarinic M2</td><td>Heart</td><td>Gi → ↓cAMP (inhibition)</td><td>ACh, Muscarine</td><td>Atropine</td></tr>
+<tr><td>Muscarinic M3</td><td>Glands, smooth muscle</td><td>Gq → ↑IP3/Ca²⁺ (excitation)</td><td>ACh, Muscarine</td><td>Atropine</td></tr>
+</table>
+<div class="box mnem"><b>Trick تفتكرها بيها:</b> α1,β1,M1,M3 كلهم Gq أو Gs بيزودوا (excitatory) — لكن α2 و M2 بس هما Gi (inhibitory).</div>
+
+<h3>🔹 تأثير الـ ANS على الأعضاء (Table 2.4 — أهم جدول في الشابتر)</h3>
+<table>
+<tr><th>Organ</th><th>Sympathetic</th><th>Parasympathetic</th></tr>
+<tr><td>Heart rate</td><td>↑ (β1)</td><td>↓ (M2)</td></tr>
+<tr><td>Bronchioles</td><td>Dilation (β2)</td><td>Constriction (M3)</td></tr>
+<tr><td>GI motility</td><td>↓ (α2,β2)</td><td>↑ (M3)</td></tr>
+<tr><td>Bladder wall</td><td>Relax (β2)</td><td>Contract (M3)</td></tr>
+<tr><td>Pupil (radial muscle)</td><td>Mydriasis — Dilation (α1)</td><td>Miosis — Constriction (M)</td></tr>
+<tr><td>Ejaculation / Erection</td><td>Ejaculation (α)</td><td>Erection (M)</td></tr>
+<tr><td>Sweating</td><td>↑ (Sympathetic cholinergic! not adrenergic)</td><td>—</td></tr>
+</table>
+<div class="box warn"><b>فخ شائع في الامتحان:</b> الغدد العرقية استثناء غريب — تعصيبها سمبثاوي لكن الناقل عندها Acetylcholine (muscarinic) مش نورإبينفرين.</div>
+</section>
+
+<section class="card" id="nsorg">
+<h2>2️⃣ تنظيم الجهاز العصبي (Organization of NS)</h2>
+<p>الجهاز العصبي = <b class="en">CNS</b> (مخ + حبل شوكي) + <b class="en">PNS</b>. <span class="en">Afferent</span> = بتوصل معلومات للجهاز العصبي (حسي). <span class="en">Efferent</span> = بتطلع معلومات منه (حركي).</p>
+<div class="grid2">
+<div class="box"><b>تركيب العصبون:</b><br>• Cell body: التصنيع البروتيني<br>• Dendrites: بتستقبل من عصبونات تانية<br>• Axon: بيبدأ من Axon hillock وبينقل الإشارة</div>
+<div class="box"><b>الخلايا الدبقية (Glial cells):</b><br>• Astrocytes: تغذية وإفراز نواقل<br>• Oligodendrocytes: Myelin في CNS (Schwann cells في PNS)<br>• Microglia: بلعمة بعد إصابة العصبون</div>
+</div>
+</section>
+
+<section class="card" id="sensory-gen">
+<h2>3️⃣ المستقبلات الحسية العامة</h2>
+<p>المستقبلات الحسية بتحول المؤثر البيئي (ضغط، ضوء، صوت، كيماوي، حرارة) لإشارة عصبية = <span class="en">Sensory Transduction</span>.</p>
+<table>
+<tr><th>النوع</th><th>أمثلة</th></tr>
+<tr><td>Mechanoreceptors</td><td>Pacinian corpuscle, joint receptors, muscle stretch receptors, baroreceptors</td></tr>
+<tr><td>Photoreceptors</td><td>Rods & Cones</td></tr>
+<tr><td>Chemoreceptors</td><td>Olfactory, taste, osmoreceptors, carotid body O2 receptors</td></tr>
+<tr><td>Nociceptors</td><td>الألم والحرارة الشديدة</td></tr>
+</table>
+
+<h3>🔹 خطوات التحويل الحسي (4 خطوات)</h3>
+<ul>
+<li>1) المؤثر يوصل للمستقبل</li>
+<li>2) فتح قنوات أيونية → تيار غالبًا داخلي (depolarization) — <b>استثناء الوحيد: الـ photoreceptor</b> بيحصل فيه hyperpolarization</li>
+<li>3) التغير في الجهد = <span class="en">Receptor (generator) potential</span> — بيكون <b>Graded</b> مش All-or-none، وممكن يوصل threshold فيولّد Action potential</li>
+<li>4) لو وصل threshold → Action potential في العصبون الحسي</li>
+</ul>
+
+<h3>🔹 التكيف (Adaptation)</h3>
+<div class="grid2">
+<div class="box"><b>Slowly adapting / Tonic</b> (muscle spindle, pressure, slow pain): بيستمر يطلق إشارات طول ما المؤثر مستمر — بيكشف عن مؤثر ثابت</div>
+<div class="box"><b>Rapidly adapting / Phasic</b> (Pacinian corpuscle, light touch): معدل الإطلاق بيقل بسرعة — بيكشف بداية ونهاية المؤثر بس</div>
+</div>
+
+<h3>🔹 المسار الحسي (4 نيورونات)</h3>
+<p>Sensory receptor → <b>First-order neuron</b> (dorsal root ganglion) → <b>Second-order neuron</b> (spinal cord/brainstem، وبيعدي للـ contralateral thalamus) → <b>Third-order neuron</b> (thalamus) → <b>Fourth-order neuron</b> (cerebral cortex = conscious perception)</p>
+<div class="box mnem"><b>مهم تفتكرها:</b> المعلومات الحسية من نص الجسم بتوصل للـ thalamus في النص التاني (contralateral) — لأن الـ second-order neuron بيعدي الخط النصفي.</div>
+</section>
+
+<section class="card" id="somato">
+<h2>4️⃣ Somatosensory System</h2>
+<p>بيغطي: touch, movement, temperature, pain. عنده مساران أساسيان:</p>
+<table>
+<tr><th></th><th>Dorsal Column System</th><th>Anterolateral System</th></tr>
+<tr><td>يحس بـ</td><td>Fine touch, pressure, vibration, proprioception, 2-point discrimination</td><td>Pain, temperature, light touch</td></tr>
+<tr><td>الألياف</td><td>Group II fibers</td><td>Group III & IV fibers</td></tr>
+<tr><td>المسار</td><td>يصعد ipsilateral لـ nucleus gracilis/cuneatus بالمخ، وبعدين يعدي الخط في الـ medulla</td><td>يعدي الخط فورًا في spinal cord (dorsal horn) وبعدين يصعد</td></tr>
+</table>
+
+<h3>🔹 Mechanoreceptors (Table 2.6)</h3>
+<table>
+<tr><th>النوع</th><th>يحس بـ</th><th>Adaptation</th></tr>
+<tr><td>Pacinian corpuscle</td><td>Vibration, tapping</td><td>Rapidly adapting</td></tr>
+<tr><td>Meissner corpuscle</td><td>Velocity</td><td>Rapidly adapting</td></tr>
+<tr><td>Ruffini corpuscle</td><td>Pressure</td><td>Slowly adapting</td></tr>
+<tr><td>Merkel disk</td><td>Location</td><td>Slowly adapting</td></tr>
+</table>
+
+<h3>🔹 الألم (Pain / Nociception)</h3>
+<ul>
+<li><b>Fast pain</b>: Group III fibers — حاد ومحدد المكان بسرعة</li>
+<li><b>Slow pain</b>: C fibers — حارق/نابض وغير محدد المكان</li>
+<li>الناقل الأساسي: <b>Substance P</b> — الـ Opioids بتخفف الألم عن طريق تثبيط إفرازه</li>
+</ul>
+<div class="box clin"><b>Referred pain:</b> ألم من عضو داخلي بيتحس على الجلد حسب قاعدة الـ <b>Dermatome</b> (نفس القطعة الشوكية). مثال كلاسيكي: ألم القلب الإقفاري بيتحس في الصدر والكتف.</div>
+</section>
+
+<section class="card" id="vision">
+<h2>5️⃣ Vision — الإبصار</h2>
+<h3>🔹 Optics (البصريات)</h3>
+<table>
+<tr><th>الحالة</th><th>يحصل فيها إيه</th><th>التصحيح</th></tr>
+<tr><td>Emmetropia</td><td>طبيعي — الضوء يركز على الشبكية</td><td>—</td></tr>
+<tr><td>Hyperopia (طول نظر)</td><td>الضوء يركز خلف الشبكية</td><td>Convex lens</td></tr>
+<tr><td>Myopia (قصر نظر)</td><td>الضوء يركز قدام الشبكية</td><td>Biconcave lens</td></tr>
+<tr><td>Astigmatism</td><td>انحناء غير منتظم في العدسة</td><td>Cylindric lens</td></tr>
+<tr><td>Presbyopia</td><td>فقدان قدرة العدسة على التكيّف مع التقدم في السن</td><td>Convex lens</td></tr>
+</table>
+
+<h3>🔹 طبقات الشبكية</h3>
+<p>Pigment epithelium → Photoreceptors (Rods & Cones) → Bipolar cells → Ganglion cells (خرج الشبكية، محاورها بتكوّن العصب البصري). Horizontal & Amacrine cells بتعمل دوائر جانبية.</p>
+<table>
+<tr><th></th><th>Rods</th><th>Cones</th></tr>
+<tr><td>الحساسية للضوء</td><td>حساسة لضوء خافت — رؤية ليلية</td><td>محتاجة ضوء قوي — رؤية نهارية</td></tr>
+<tr><td>Acuity</td><td>أقل، مش موجودة في الـ fovea</td><td>أعلى، موجودة في الـ fovea (1:1 مع bipolar cell)</td></tr>
+<tr><td>التكيف مع الظلام</td><td>بتتكيف متأخر</td><td>بتتكيف الأول</td></tr>
+<tr><td>الرؤية اللونية</td><td>لا</td><td>نعم</td></tr>
+</table>
+
+<h3>🔹 المسار البصري وإصابات كل جزء (Figure 2.4 — بييجي كتير في الامتحان)</h3>
+<table>
+<tr><th>مكان القطع</th><th>النتيجة</th></tr>
+<tr><td>Optic nerve (طرف واحد)</td><td>عمى تام في نفس العين (Ipsilateral blindness)</td></tr>
+<tr><td>Optic chiasm</td><td>Bitemporal hemianopia (فقدان المجال الصدغي في العينين)</td></tr>
+<tr><td>Optic tract</td><td>Homonymous contralateral hemianopia</td></tr>
+<tr><td>Geniculocalcarine tract</td><td>Homonymous hemianopia with macular sparing</td></tr>
+</table>
+
+<h3>🔹 خطوات الـ Phototransduction في العصي (Rods)</h3>
+<p>Light + 11-cis retinal → All-trans retinal → Metarhodopsin II → activates <b>Transducin (Gt)</b> → activates Phosphodiesterase → ↓cGMP → إغلاق قنوات Na⁺ → <b>Hyperpolarization</b> → ↓glutamate release.</p>
+<div class="box">فيتامين A ضروري لتجديد 11-cis retinal — نقصه بيسبب <b>Night blindness</b>.</div>
+</section>
+
+<section class="card" id="audition">
+<h2>6️⃣ Audition — السمع</h2>
+<p>Sound waves → Outer ear → Middle ear (tympanic membrane + ossicles: malleus, incus, stapes) → Oval window → Inner ear (fluid-filled cochlea).</p>
+<h3>🔹 القوقعة</h3>
+<ul>
+<li><b>Scala vestibuli/tympani</b>: Perilymph (Na⁺ عالي)</li>
+<li><b>Scala media</b>: Endolymph (K⁺ عالي) — فيها الـ <b>Organ of Corti</b> على الـ basilar membrane</li>
+</ul>
+<div class="box mnem"><b>ترميز التردد:</b> الـ Base (قرب النافذة البيضوية) ضيق وصلب → بيستجيب لأصوات عالية التردد. الـ Apex (قرب helicotrema) واسع ومرن → بيستجيب لأصوات منخفضة.</div>
+<p>انحناء الأهداب (cilia) بيغير التوصيل الـ K⁺ → depolarization أو hyperpolarization → <b>Cochlear microphonic potential</b> → إطلاق متقطع في العصب السمعي (CN VIII).</p>
+</section>
+
+<section class="card" id="vestibular">
+<h2>7️⃣ الجهاز الدهليزي — Vestibular System</h2>
+<p>بيكشف تسارع الرأس. <b>Semicircular canals</b> = angular acceleration. <b>Utricle & Saccule</b> = linear acceleration.</p>
+<ul>
+<li>الأهداب لو انحنت تجاه الـ Kinocilium → <b>Depolarization (excitation)</b></li>
+<li>لو انحنت بعيد عنه → <b>Hyperpolarization (inhibition)</b></li>
+</ul>
+<div class="box"><b>Nystagmus:</b> اتجاهه = اتجاه الحركة السريعة للعين = نفس اتجاه دوران الرأس. <br><b>Postrotatory nystagmus:</b> عكس اتجاه الدوران، بيحصل بعد ما الرأس يوقف فجأة.</div>
+</section>
+
+<section class="card" id="smell-taste">
+<h2>8️⃣ الشم والتذوق</h2>
+<div class="grid2">
+<div class="box"><b>Olfaction (CN I):</b><br>• خلايا المستقبل هي عصبونات حقيقية (الوحيدة اللي بتتجدد في الجسم!)<br>• ألياف CN I: unmyelinated C fibers (أبطأ نوع)<br>• كسر الـ cribriform plate → Anosmia/Hyposmia (لكن الاستجابة للأمونيا سليمة لأنها بتتنقل عن طريق CN V مش CN I)<br>• Mitral cells (second-order) بترسل للـ prepiriform cortex</div>
+<div class="box"><b>Taste:</b><br>• خلايا المستقبل مش عصبونات (عكس الشم)<br>• 2/3 الأمامية للسان: fungiform papillae — حلو/مالح/umami — عصب CN VII<br>• 1/3 الخلفية: circumvallate/foliate — مر/حامض — عصب CN IX<br>• الحلق والـ epiglottis: CN X</div>
+</div>
+</section>
+
+<section class="card" id="motor">
+<h2>9️⃣ الجهاز الحركي — Motor Unit & Muscle Sensors</h2>
+<p><b>Motor unit</b> = motoneuron واحد + كل الألياف العضلية اللي بيغذيها. قوة الانقباض بتتحدد بـ <b>Recruitment (Size principle)</b>: العصبونات الصغيرة (threshold أقل) بتشتغل الأول وبتنتج قوة أقل، والكبيرة بتشتغل أخيرًا وبتنتج قوة أكبر.</p>
+
+<h3>🔹 مستشعرات العضلة (Table 2.5)</h3>
+<table>
+<tr><th>النوع</th><th>يحس بـ</th><th>الألياف</th></tr>
+<tr><td>Muscle spindle</td><td>Static & dynamic length changes</td><td>Groups Ia & II</td></tr>
+<tr><td>Golgi tendon organ</td><td>Muscle tension</td><td>Group Ib</td></tr>
+<tr><td>Pacinian corpuscle</td><td>Vibration</td><td>Group II</td></tr>
+<tr><td>Free nerve endings</td><td>الألم</td><td>Groups III & IV</td></tr>
+</table>
+
+<div class="grid2">
+<div class="box"><b>Extrafusal fibers:</b> جسم العضلة، بتنقبض فعليًا، بيغذيها α-motoneurons</div>
+<div class="box"><b>Intrafusal fibers:</b> جوه الـ muscle spindle، أصغر، بيغذيها γ-motoneurons، مش بتنتج قوة معتبرة</div>
+</div>
+
+<h3>🔹 أنواع الألياف داخل الـ Spindle</h3>
+<table>
+<tr><th></th><th>Nuclear bag fibers</th><th>Nuclear chain fibers</th></tr>
+<tr><td>يحس بـ</td><td>Dynamic changes (سرعة التغير)</td><td>Static changes</td></tr>
+<tr><td>الألياف الحسية</td><td>Group Ia</td><td>Group II</td></tr>
+</table>
+<div class="box mnem"><b>وظيفة γ-motoneurons:</b> بتضبط حساسية الـ spindle عشان يفضل حساس حتى أثناء انقباض العضلة نفسها (co-activation مع α-motoneurons).</div>
+</section>
+
+<section class="card" id="reflexes">
+<h2>🔟 المنعكسات العضلية (Table 2.8)</h2>
+<table>
+<tr><th>Reflex</th><th>Synapses</th><th>المؤثر</th><th>الألياف الواردة</th><th>الاستجابة</th></tr>
+<tr><td>Stretch reflex (Knee-jerk)</td><td>Monosynaptic</td><td>تمدد العضلة</td><td>Ia</td><td>انقباض نفس العضلة</td></tr>
+<tr><td>Golgi tendon reflex (Clasp-knife)</td><td>Disynaptic</td><td>انقباض العضلة</td><td>Ib</td><td>ارتخاء نفس العضلة</td></tr>
+<tr><td>Flexor withdrawal</td><td>Polysynaptic</td><td>الألم</td><td>II, III, IV</td><td>Flexion في نفس الجهة + Extension في الجهة المقابلة</td></tr>
+</table>
+
+<h3>🔹 Stretch Reflex بالتفصيل (مثال: Knee jerk)</h3>
+<p>الطرق على الـ patellar tendon → تمدد الـ quadriceps → تنبيه Group Ia afferents → synapse مباشر على α-motoneurons في الحبل الشوكي → انقباض نفس العضلة (quadriceps) → مد الساق. زيادة نشاط γ-motoneurons بتزود حساسية الـ spindle وبالتالي بتضخّم المنعكس.</p>
+
+<h3>🔹 Golgi Tendon Reflex</h3>
+<p>عكس الـ stretch reflex: انقباض فعلي للعضلة → تنبيه Group Ib → تنبيه interneurons مثبطة → تثبيط α-motoneurons → ارتخاء نفس العضلة. الشكل المبالغ فيه = <b>Clasp-knife reflex</b> في حالات الـ spasticity.</p>
+
+<h3>🔹 التنظيم الشوكي</h3>
+<ul>
+<li><b>Convergence</b>: motoneuron واحد بياخد إشارات من عدة Ia afferents → Spatial/Temporal summation</li>
+<li><b>Divergence</b>: ألياف Ia بتوزع لكل الـ α-motoneurons اللي بتغذي نفس العضلة</li>
+<li><b>Renshaw cells</b>: خلايا مثبطة في الـ ventral horn، بتاخد تغذية راجعة سلبية من محاور الـ motoneurons نفسها</li>
+</ul>
+</section>
+
+<section class="card" id="spinal-brainstem">
+<h2>1️⃣1️⃣ Spinal & Brainstem Control of Posture</h2>
+<table>
+<tr><th>المسار</th><th>المنشأ</th><th>التأثير</th></tr>
+<tr><td>Rubrospinal</td><td>Red nucleus</td><td>تنبيه Flexors + تثبيط Extensors</td></tr>
+<tr><td>Pontine reticulospinal</td><td>Pons</td><td>تنبيه عام، الأغلب على Extensors</td></tr>
+<tr><td>Medullary reticulospinal</td><td>Medulla</td><td>تثبيط عام، الأغلب على Extensors</td></tr>
+<tr><td>Lateral vestibulospinal</td><td>Deiters nucleus</td><td>تنبيه قوي لـ Extensors + تثبيط Flexors</td></tr>
+<tr><td>Tectospinal</td><td>Superior colliculus</td><td>تحكم في عضلات الرقبة</td></tr>
+</table>
+
+<h3>🔹 قطع الحبل الشوكي (Spinal transection)</h3>
+<ul>
+<li><b>Paraplegia</b>: فقدان الحركة الإرادية تحت مستوى الإصابة</li>
+<li><b>Spinal shock</b>: فقدان مؤقت للمنعكسات فور الإصابة (Flaccid paralysis)، بترجع تدريجيًا وأحيانًا بـ hyperreflexia</li>
+<li>إصابة C7: فقدان التوتر السمبثاوي للقلب → ↓HR و↓ضغط</li>
+<li>إصابة C3: توقف التنفس (العضلات التنفسية منفصلة عن مراكز جذع المخ)</li>
+<li>إصابة C1: الوفاة</li>
+</ul>
+
+<h3>🔹 إصابات فوق الحبل الشوكي</h3>
+<table>
+<tr><th>مكان الإصابة</th><th>النتيجة</th></tr>
+<tr><td>فوق Lateral vestibular nucleus</td><td>Decerebrate rigidity</td></tr>
+<tr><td>فوق Pontine reticular formation وتحت Midbrain</td><td>Decerebrate rigidity</td></tr>
+<tr><td>فوق Red nucleus</td><td>Decorticate posturing</td></tr>
+</table>
+</section>
+
+<section class="card" id="cerebellum">
+<h2>1️⃣2️⃣ المخيخ — Cerebellum</h2>
+<div class="grid2">
+<div class="box"><b>Vestibulocerebellum</b>: توازن وحركة العين</div>
+<div class="box"><b>Pontocerebellum</b>: تخطيط وبدء الحركة</div>
+<div class="box"><b>Spinocerebellum</b>: Synergy — التحكم بمعدل وقوة ومدى واتجاه الحركة</div>
+</div>
+<h3>🔹 طبقات القشرة المخيخية</h3>
+<p>Granular layer (الداخلية) → Purkinje cell layer (الوسطى، خرجها دائمًا مثبط GABA) → Molecular layer (الخارجية).</p>
+<div class="grid2">
+<div class="box"><b>Climbing fibers</b>: من inferior olive، بتعطي high-frequency bursts، مهمة في التعلم الحركي</div>
+<div class="box"><b>Mossy fibers</b>: من مراكز تانية كتير (spinocerebellar, vestibulocerebellar, pontocerebellar)</div>
+</div>
+<div class="box clin"><b>Cerebellar ataxia:</b> عدم تناسق، تأخر بدء الحركة، Dysdiadochokinesia (عجز عن الحركات المتبادلة السريعة)، Intention tremor، Rebound phenomenon.</div>
+</section>
+
+<section class="card" id="basal">
+<h2>1️⃣3️⃣ العقد القاعدية — Basal Ganglia</h2>
+<p>Striatum + Globus pallidus + Subthalamic nucleus + Substantia nigra. بتنظم خرج الـ thalamus للـ motor cortex.</p>
+<div class="box"><b>Direct pathway</b>: عمومًا Excitatory. <b>Indirect pathway</b>: عمومًا Inhibitory. الدوبامين بيثبط الـ indirect (عبر D2) وينبه الـ direct (عبر D1) → صافي تأثير الدوبامين = <b>Excitatory</b>.</div>
+<table>
+<tr><th>الإصابة</th><th>السبب</th><th>النتيجة</th></tr>
+<tr><td>Globus pallidus</td><td>—</td><td>عجز عن دعم الوضعية</td></tr>
+<tr><td>Subthalamic nucleus</td><td>فقدان التثبيط بالجهة المقابلة</td><td>Hemiballismus (حركات رمي عنيفة)</td></tr>
+<tr><td>Striatum</td><td>فقدان التثبيط</td><td>حركات لا إرادية سريعة — Huntington disease</td></tr>
+<tr><td>Substantia nigra</td><td>تدمير خلايا دوبامينية</td><td>Parkinson disease: rigidity, tremor, ↓حركة إرادية</td></tr>
+</table>
+</section>
+
+<section class="card" id="cortex">
+<h2>1️⃣4️⃣ القشرة الحركية</h2>
+<div class="grid2">
+<div class="box"><b>Premotor + Supplementary motor cortex (Area 6):</b> تخطيط الحركة، نشطة أثناء "التمرين الذهني" للحركة</div>
+<div class="box"><b>Primary motor cortex (Area 4):</b> تنفيذ الحركة، منظمة somatotopically (Motor homunculus). النوبات الصرعية فيها = <b>Jacksonian seizures</b></div>
+</div>
+</section>
+
+<section class="card" id="higher">
+<h2>1️⃣5️⃣ الوظائف العليا للقشرة المخية</h2>
+<h3>🔹 EEG</h3>
+<ul><li>عين مفتوحة/صاحي: <b>Beta waves</b></li><li>عين مقفولة/صاحي: <b>Alpha waves</b></li><li>النوم: Slow waves، ارتخاء عضلي، ↓HR و↓BP</li></ul>
+<h3>🔹 النوم</h3>
+<p>الإيقاع اليومي بيتحكم فيه <b>Suprachiasmatic nucleus</b> بالهيبوثلامس. الـ <b>REM sleep</b> بيحصل كل 90 دقيقة — فيه معظم الأحلام، فقدان توتر العضلات، وEEG شبه الصحيان. البنزوديازيبينات والتقدم في السن بيقللوا مدة REM.</p>
+<h3>🔹 اللغة</h3>
+<ul>
+<li>النصف الأيسر مسيطر على اللغة (حتى في الأشول)</li>
+<li>إصابة <b>Wernicke area</b> → Sensory aphasia (صعوبة الفهم)</li>
+<li>إصابة <b>Broca area</b> → Motor aphasia (الفهم سليم لكن الكلام والكتابة متأثرين)</li>
+</ul>
+<h3>🔹 الذاكرة</h3>
+<p>Short-term = تغيرات مشبكية (synaptic). Long-term = تغيرات بنيوية أكثر ثباتًا. إصابة الـ Hippocampus ثنائية الجانب → عجز عن تكوين ذكريات طويلة المدى جديدة.</p>
+</section>
+
+<section class="card" id="bbb">
+<h2>1️⃣6️⃣ الحاجز الدموي المخي و CSF</h2>
+<p>الـ BBB = خلايا endothelial بالشعيرات المخية + خلايا choroid plexus. المواد الدهنية (CO2, O2) والماء بتعدي بحرية. البروتين والكوليسترول <b>مستبعدين</b> من الـ CSF لكبر حجمهم.</p>
+<table>
+<tr><th>CSF ≈ Blood</th><th>CSF أقل من Blood</th><th>CSF أعلى من Blood</th></tr>
+<tr><td>Na⁺, Cl⁻, HCO3⁻, Osmolarity</td><td>K⁺, Ca²⁺, Glucose, Cholesterol*, Protein*</td><td>Mg²⁺, Creatinine</td></tr>
+</table>
+<p style="font-size:12px;color:var(--muted)">*تركيز مهمل تقريبًا في الـ CSF</p>
+</section>
+
+<section class="card" id="temp">
+<h2>1️⃣7️⃣ تنظيم درجة الحرارة</h2>
+<div class="grid2">
+<div class="box"><b>الاستجابة للبرد (Posterior hypothalamus):</b><br>• Thyroid hormone ↑ metabolic rate<br>• تنبيه سمبثاوي للـ brown fat<br>• Shivering (أقوى آلية)</div>
+<div class="box"><b>الاستجابة للحرارة (Anterior hypothalamus):</b><br>• ↓ التوتر السمبثاوي على أوعية الجلد → توسع وفقد حرارة بالإشعاع والحمل<br>• التعرق (تعصيب سمبثاوي كوليني)</div>
+</div>
+<h3>🔹 الحمى (Fever)</h3>
+<p>Pyrogens → إفراز <b>IL-1</b> من الخلايا البلعمية → يعمل على الـ anterior hypothalamus → ↑ إنتاج <b>Prostaglandin E2</b> → رفع نقطة الضبط (set point) → تفعيل آليات توليد الحرارة.</p>
+<div class="box clin"><b>الأسبرين</b> بيخفض الحمى بتثبيط الـ cyclooxygenase (تثبيط إنتاج البروستاجلاندين). <b>الستيرويدات</b> بتمنع تحرر الـ arachidonic acid أصلًا.</div>
+<ul>
+<li><b>Heat exhaustion</b>: نتيجة تعرق زائد → ↓حجم الدم وضغطه → إغماء</li>
+<li><b>Heat stroke</b>: فشل آلية التبريد الطبيعية → تلف نسيجي</li>
+<li><b>Malignant hyperthermia</b>: عند أشخاص معرضين، بسبب مخدرات الاستنشاق → زيادة هائلة في استهلاك الأكسجين وإنتاج الحرارة بالعضلات</li>
+</ul>
+</section>
+
+<section class="card" id="highyield">
+<h2>⭐ High-Yield Review</h2>
+<h3>Top 10 نقط أكتر حاجة بتتسأل</h3>
+<ol class="top10">
+<li>الفرق بين مستقبلات α1/α2/β1/β2 وآلية عملهم (Gq/Gi/Gs) وأدويتهم</li>
+<li>Table 2.4: تأثير Sympathetic vs Parasympathetic على كل عضو (خصوصًا العرق والقلب والبولتين)</li>
+<li>مسار الإبصار وإصابات كل نقطة (Optic nerve / chiasm / tract / geniculocalcarine)</li>
+<li>خطوات الـ Phototransduction والدور اللي بيلعبه cGMP</li>
+<li>الفرق بين Stretch reflex (monosynaptic, Ia) و Golgi tendon reflex (disynaptic, Ib)</li>
+<li>مواقع إصابة الحبل الشوكي (C1/C3/C7) ونتائجها</li>
+<li>الدوبامين وتأثيره على Direct/Indirect pathway وربطها بـ Parkinson/Huntington</li>
+<li>مكونات الـ CSF مقارنة بالدم (خصوصًا البروتين والجلوكوز)</li>
+<li>آلية الحمى وكيف يعمل الأسبرين والستيرويد</li>
+<li>الفرق بين Rods و Cones في الحساسية والـ acuity والتكيف مع الظلام</li>
+</ol>
+
+<h3>أخطاء شائعة (Common Mistakes)</h3>
+<ul>
+<li>❌ الاعتقاد إن الغدد العرقية بتستقبل نورإبينفرين — الصح: ACh رغم إنها سمبثاوية</li>
+<li>❌ الخلط بين Hexamethonium (ganglionic blocker) و Curare (neuromuscular blocker) — الاتنين نيكوتينيك لكن في أماكن مختلفة</li>
+<li>❌ نسيان إن الـ second-order neurons في المسارات الحسية بتعدي الخط النصفي قبل الـ thalamus</li>
+<li>❌ الخلط بين Nuclear bag fibers (Ia, dynamic) و Nuclear chain fibers (II, static)</li>
+<li>❌ الاعتقاد إن الدوبامين مثبط بشكل عام — هو مثبط للـ indirect pathway بس، وصافي تأثيره Excitatory</li>
+</ul>
+
+<h3>💬 Active Recall — أسئلة سريعة</h3>
+<details class="qa"><summary>1) ليه Hexamethonium بيثبط الـ ganglia لكنه ملوش تأثير على الـ neuromuscular junction؟</summary><div>لأن الـ nicotinic receptors في الـ autonomic ganglia (Nₙ) مختلفة شوية عن اللي في الـ NMJ (Nₘ) رغم إنهم من نفس النوع.</div></details>
+<details class="qa"><summary>2) إيه ميكانيزم عمل Prazosin في خفض ضغط الدم؟</summary><div>Antagonist لمستقبلات α1 على الأوعية الدموية → توسع وعائي → ↓resistance → ↓ضغط.</div></details>
+<details class="qa"><summary>3) قطع أي جزء من المسار البصري بيسبب Bitemporal hemianopia؟</summary><div>الـ Optic chiasm — لأن فيه بتتقاطع الألياف من الـ nasal hemiretina لكل عين.</div></details>
+<details class="qa"><summary>4) ليه مريض الـ Pheochromocytoma بيدي فحص VMA في البول؟</summary><div>لأن الورم بيفرز كاتيكولامينات زيادة، وVMA هو الناتج الأيضي بتاعهم اللي بيتفرز في البول.</div></details>
+<details class="qa"><summary>5) إيه الفرق الوظيفي بين Climbing fibers و Mossy fibers في المخيخ؟</summary><div>Climbing fibers (من inferior olive) بتدي "complex spikes" وتشارك في التعلم الحركي؛ Mossy fibers بتدي "simple spikes" عن طريق Purkinje cells من مصادر متعددة بجذع المخ والحبل الشوكي.</div></details>
+<details class="qa"><summary>6) ليه إصابة الحبل الشوكي عند C3 قاتلة تقريبًا فورًا؟</summary><div>لأنها بتفصل العضلات التنفسية عن مراكز التحكم بجذع المخ → توقف التنفس.</div></details>
+<details class="qa"><summary>7) إيه اللي بيحصل للـ set point الحراري وقت الحمى، وإزاي الأسبرين بيرجعه؟</summary><div>الـ Pyrogens عن طريق IL-1 و Prostaglandin E2 بيرفعوا الـ set point، فالجسم يحس إنه بارد فيولّد حرارة. الأسبرين بيثبط الـ cyclooxygenase فيقلل البروستاجلاندين ويرجّع الـ set point لطبيعته.</div></details>
+
+<h3>🩺 Oral Viva Style Questions</h3>
+<ul>
+<li>اشرحلي إزاي بيتنظم قطر حدقة العين بالجهاز الذاتي (Sympathetic vs Parasympathetic)؟</li>
+<li>وضّح الفرق بين Decerebrate rigidity و Decorticate posturing من ناحية مكان الإصابة والميكانيزم.</li>
+<li>ازاي المخيخ بيساهم في تناسق الحركة، ووصف علامات إصابته؟</li>
+<li>اشرح دورة الـ Phototransduction بالتفصيل بدايةً من وصول الضوء لحد hyperpolarization.</li>
+<li>ليه مريض بإصابة في الـ Substantia nigra بيعاني من Rigidity وTremor؟ اربطها بمسار الدوبامين.</li>
+</ul>
+</section>
+
+<footer>BRS Physiology 7th Ed — Chapter 2: Neurophysiology · مراجعة معدّة لـ Doza</footer>
+</main>
+</div>
+<script>
+(function(){
+  var nav = document.getElementById('sideNav');
+  var btn = document.getElementById('navToggle');
+  var scrim = document.getElementById('scrim');
+  function closeNav(){ nav.classList.remove('open'); scrim.classList.remove('show'); }
+  function openNav(){ nav.classList.add('open'); scrim.classList.add('show'); }
+  btn.addEventListener('click', function(){
+    nav.classList.contains('open') ? closeNav() : openNav();
+  });
+  scrim.addEventListener('click', closeNav);
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeNav);
+  });
+
+  // Scroll-spy: highlight the section currently in view
+  var links = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var sections = Object.keys(map).map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        var link = map[en.target.id];
+        if(!link) return;
+        if(en.isIntersecting){
+          links.forEach(function(a){ a.classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+    sections.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
